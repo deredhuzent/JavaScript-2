@@ -1,3 +1,3 @@
 # JavaScript-2
 
-This is really ugly code, but some bare bones to get started.  It will get some fixes as we go, and then there will be a better base for students going forward.
+Code templates for VFS Programming for Games Term 2 JavaScript Course.  AJAX and game devv with a level editor and 2D physics based game.
