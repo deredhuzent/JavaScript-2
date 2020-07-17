@@ -1,62 +1,129 @@
-/* Copyright (C) 2018 Scott Henshaw, All Rights Reserved */
-.hide { display:none; }
-.box-border {
-    border:1px solid black;
+/* Copyright (C) 2020 @deredhuzent, All Rights Reserved */
+
+html{
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
-.box-dashed {
-    border:2px dashed red;
+
+#appContainer{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    margin: 1em;
+    width: 98vw;
+    height: 97vh;
 }
-#object-list {
+
+#leftContainer {
+    display: grid;
+    grid-template-rows: 1fr 1fr 2fr;
+    width: 28vw;
+    height: 94vh;
+    grid-gap: 5px;
+    align-content: center;
+}
+
+.box{
+    display: grid;
+    align-content: center;
+    text-align: center;
+}
+
+#rightContainer{
+    width: 71vw;
+    height: 97vh;
+
+    display: grid;
+    grid-template-rows: auto 2fr;
+}
+
+#title{
+    padding: 0.7em;
+}
+
+#lvlTable {   
+    font-family: 'Comic Neue', cursive; 
+    font-size: 1.5rem;
+    text-align: left;
+    padding-left: 1.6em;
+}
+
+input, select, option{
+    color: gray;
+    text-align: center;
+    padding: 0.2em;
+    font-size: 0.9rem;
+}
+
+#loadLvlBtn, #loadLvlBtn, #deleteLvlBtn, #saveLvlBtn, #addObjBtn, #newLvlBtn, #editObjBtn, #deleteObjBtn,  li {
+    text-decoration: none;
+    color: gray;
+    font-family: 'Comic Neue', cursive; 
+    font-size: 1.5rem;
+}
+
+#menuList {
     list-style-type: none;
-}
-.editor {
-    background-image: url('../images/my-background.jpg');
-    background-size: 100% 100%;
-    min-width: 50vw;
-    min-height: 90vh;
-}
-.debug {
-    border: dashed 1px red;
-}
-
-.library {
-    position: relative;
-}
-
-.obstacle {
-    display: inline-block;
-    position: relative;
-    background-image: url('../images/crate-one.png');
-    background-size: 100% 100%;
-    height: 100px;
-    width: 100px;
-}
-
-.placed {
-    position: relative;
-}
-
-.flex-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap:nowrap;
-    justify-content:center;
-}
-.flex-item {
-    flex-grow: 1;
-}
-.flex-center-item {
-    flex-grow: 3;
-}
-.feedback {
-    height: 2em;
-    width: 100%;
+    justify-content: space-around;    
+    align-items: flex-end;
+    padding: 30px 5%;
 }
 
-.info-form-area {
-    padding: 8px;
+.navbar{
+   margin: 0.5em; 
+   width: 68vw;
 }
 
-input {
-    margin: 4px;
+#draggSpace {
+    margin: 1em;
+    height: 45vh;
+    border: 4px solid black;
+
+    overflow-y: auto;
+    overflow-x: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#lvlEditor{
+    display: grid;
+    margin: 0.5em;
+    top: 1em;
+    width: 1280px;
+    height: 720px;
+    border: 4px solid black;
+
+    background-image: url("../images/my-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#draggsTitle{
+    font-family: 'Comic Neue', cursive; 
+    font-size: 1.5rem;
+}
+
+#draggList{
+    justify-content: flex-start;
+    flex-wrap: wrap; 
+}
+
+.obstacle{
+    width: 10%;
+    margin: 1.5em;
+}
+
+.menuImg{
+    width: 50%;
+}
+
+#objList{
+    text-decoration: none;
+    list-style: none;
 }

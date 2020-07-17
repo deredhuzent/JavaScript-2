@@ -1,157 +1,113 @@
-// Copyright (C) 2020 Scott Henshaw
-'use strict';
+// Copyright (C) 2020 deredhzuent & Scott Henshaw, all rights reserved
+'use strict'
 
-// This controlls the User Interface
-export default class App {
+//control user interface
+export default class App{
 
-    constructor() {
+    constructor(){
+        //TODO: initialize lvl data
+        //TODO: fetch list of library things
+        //TODO: this.loadLibrary();
+        let $libraryListEls = $(".obstacle"); //create jquery list library, grabbing by class
 
-        // Initialize level data
+        //attach draggable handlers to each el
+        this.addDraggHandlers($libraryListEls);
 
-        // fetch the list of library things
-        // TODO: this.loadLibrary();
-        let $libraryElementList = $(".obstacle");
-        this.addDraggableHandlers( $libraryElementList );
-
-        // fetch the list of existing levels
+        //TODO: fecth list of existins lvls
         this.addDroppableHandlers();
 
-        // fill in the library,
+        //TODO: fill library
+        //TODO: create new lvl/load existing lvl
 
-        // create a new level/load existing level
-
-        // Event handlers here
-        $('#level-dropdown').on('change', event => this.loadLevel( event ));
-        $('#new-level-btn').on('click', event => this.createLevel( event ));
-        $('#save-btn').on('click', event => this.saveLevel( event ));
+        // event handlers (Btns)
+        $('newLvlBtn').on('click', event => this.createLevel(event));
+        $('saveLvlBtn').on('click', event => this.saveLevel(event));
+        $('loadLvlBtn').on('click', event => this.loadLevel(event));
+        //$('loadLvlBtn').on('change', event => this.loadFile(event)); dropdown list
+        $('deleteObjBtn').on('click', event => this.deleteObj(event));
+        $('editObjBtn').on('click', event => this.editObject(event));
+        $('addObjBtn').on('click', event => this.addObj(event));
     }
 
-    addDraggableHandlers( $elementList ) {
+    addDraggHandlers($elementList){
 
-        $elementList
-            .on("dragstart", event => {
-                // collect drag info, delta from top left, el id
-                let dragData = {
-                    dx: event.offsetX,
-                    dy: event.offsetY,
-                    id: `#${event.target.id}`,
-                };
-                this.storeData( event, dragData );
-            })
-            .on("drag", event => {
-                // debug stuff?
-            })
-            .on("dragend", event => {
-                // change the look,
-            });
+        $elementList.on("dragStart", event => {
+            //collect drag info, delta from top left,el id
+        })
+        .on("drag", event =>{
+            //debbug stuff
+        })
+        .on("dragEnd", event =>{
+            //change look
+        })
+    } 
+
+    addDroppableHandlers(){
+        $('') //5:40 https://www.youtube.com/watch?time_continue=1&v=_1ZzLODjVMM
     }
 
-    storeData( event, data ) {
-        event.originalElement.dataTransfer.setData("text/plain", JSON.stringify( data ) );
+    createLevel(event){
+        //TODO: create level
     }
 
-    addDroppableHandlers() {
-        let $editor = $("#editor-wrapper");
-        $editor.on("dragenter", event => { /* Do nothing - maybe change a cursor */ })
-            .on("dragover", event => {
-                // change the cursor, maybe an outline on the object?
-            })
-            .on("dragleave", event => {
-                // do nothing? undo what we did when we entered
-            })
-            .on("drop", event => {
-                // On drop, clone the object, add to this div as a child
-                let dragData = this.eventData( event );
-                let $obj = $(dragData.id);
-
-                // add a class to the new element to indicate it exists
-                if (!$obj.hasClass("placed"))
-                    $obj = this.generateNewObstacle( $oldObstacle )
-
-                let editorPos = $editor.offset();
-                $obj.offset( this.offsetPosition( event, dragData ) );
-            })
+    loadLevel(event){
+        //TODO: load Level with file name
     }
 
-    eventData( event ) {
-        let dataString = event.originalEvent.dataTransfer.getData("text/plain");
-        return JSON.parse( dataString );
-    }
-
-    offsetPosition( event, offset ) {
-        return {
-            left: event.clientX - offset.dx,
-            top: event.clientY - offset.dy,
-        }
-    }
-
-    generateNewObstacle( $old ) {
-        // not placed yet...
-        let $newObject = $("<div></div>");
-        $newObject.addClass('placed');
-        // attach properties to newObject, width, height, background-image...after
-
-        // attach $newObject to our editor-wrapper
-        $("#editor-wrapper").addChild( $newObject );
-        $obj = $newObject;
-    }
-
-    createLevel( event ) {
-
-    }
-
-    loadLevel( event ) {
-        // TODO: Load a file with the given file name...
-    }
-
-    saveLevel( event ) {
+    saveLevel(event){
+        //TODO: 
         event.preventDefault();
 
-        let levelData = this.gatherFormData( event );
-        // Post a message to the server
-        $.post('/api/save_level', levelData )
-            .then( responseData => {
+       let lvlData = this.gatherFormData(event);
 
-                // deal with a response
-                let newData = JSON.parse( responseData );
+       //TODO: post msg to server
+       $.post('/api/save-lvl', lvlData)
+           .then(responseData => {
+   
+               //deal with response
+               let newData = JSON.parse(responseData);
 
-                // TODO: pop a dialog to tell the user that we saved OK
-            })
-            .catch( error => {
-                console.log( error )
-                // TODO: tell the user in a dialog that the save did not work
-            });
+               //TODO: pop msg -->> success
+   
+           })
+           .catch(error => 
+            //TODO: pop msg -->> fail
+            console.log(error));
     }
 
-    gatherFormData( event ) {
-        // TODO: gather all the data and send it off to the server
-        let baseData = $("#info-form").serializeArray();
+    gatherFormData(event){
+        //TODO: gather data and send off to server
+        
+        let baseData = $('lvlInfo').serializeArray(); //<<-- gives me an arr of objects
+        
         /*
-        We have this...
+        serializeArray gives:
         let deleteMe = [{ name:"name", value:"level-1" },
                         { name:"obstacleCount", value: "10" },
                         {}, ...];
 
-        We want this...
+        transform to:
         let levelData = {
             name: "level-1",
             obstacleCount: 10,
             ...
         };
         */
-        let levelData = {};
-        for (let field of baseData) {
 
-            levelData[field.name] = field.value;
+        let lvlData = {}; //create empty obj
+        for(let field of baseData){
+
+            //create new lvl data (obj attributes)
+            lvlData[field.name] = field.value;
         }
 
-        //  TODO: Also add in the data representing the entities in the actual level
+        //TODO: add data of the actual level - lvl editor section
 
-        return levelData;
+        return lvlData;
     }
 
-    run() {
+
+    run(){
 
     }
 }
-

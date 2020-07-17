@@ -1,93 +1,74 @@
-// Copyright (C) 2020 Scott Henshaw, All Rights Reserved
-'use strict';
+// Copyright (c) 2020 @deredhuzent, all rights reserved
+'use strict'
 
 import Express from 'express'
 import Path from 'path'
 import HTTP from 'http'
 import FileSystem from 'fs'
 
-
 const PORT = 3000;
 
 class Server {
 
-    constructor() {
+    constructor(){
 
+        //create express
         this.api = Express();
-        this.api.use( Express.json() )
-                .use( Express.urlencoded({ extended: false }))
-                .use( Express.static( Path.join( __dirname, '.')));
 
-
-        this.api.get('/', ( request, response ) => {
-            response.render('index',{ title:'Greatest Form Demo Ever!'})
+        //configurate express
+        this.api.use(Express.json())
+                .use(Express.urlencoded({ extended: false }))
+                .use(Express.static( Path.join( __dirname, '.')));
+            
+        this.api.get('/', (req, res) => {
+            res.render('index', {title: 'Angry pigs editor! Oink!'})
         });
 
-        this.api.post('/api', ( request, response ) => {
-            // handle edges from form
+        this.api.post('/api', (req, res) => {
 
-            let params = request.params; // data attached in the url /api/:name/:id
-            let query = request.query;   // data attached as a PHP param String
-            let data = request.body;     // data attached as JSON data
+            let result = { error: -1};
 
+            //handle edges from form
+            let params = request.params; // data in url -->> /api/:name/:id
+            let query = request.query; // data in PHP -->> param String
+            let data = request.body; // data as JSON data
 
-            let result = this.handleActionQuery( request.query.action, request.query, request.body );
-            let JSONString = JSON.stringify( result );
-            response.send( JSONString )
-        });
+            let action = request.body.action;
+            switch(action){
 
-        this.api.post('/api/:action', ( request, response ) => {
-            // handle edges from form
-            let result = this.handleActionQuery( request.params.action, request.query, request.body );
-            let JSONString = JSON.stringify( result );
-            response.send( JSONString )
-        });
+                case 'Validate':
+                    result.error= 0;
+                    break;
 
-        this.api.post('/api/save', ( request, response ) => {
-            // handle edges from form
-            let result = this.handleActionQuery('save', request.query, request.body );
+                case 'Submit':
+                    result.error = 0;
+                    break;
+                
+                default:
+                    result = {error: -2, ...req.body}
+                    break;
+            }
 
-            // Lets get some data to the client
-            // TODO: something with the form we got sent, like save the content as a file
-            let JSONString = JSON.stringify( result );
-            response.send( JSONString )
-        });
+            //send the result back as JSON data
 
-        this.run()
-    }
+            let JSONString = JSON.stringify( result);
+            res.send(JSONString)
+        })
 
-    handleActionQuery( action, query, body ) {
-
-        let result = { error: -1 };
-        let command = (action == '' ? body.action : action);
-        switch (command) {
-            case 'Validate':
-                result.error = 0;
-                break;
-
-            case 'Submit':
-                result.error = 0;
-                break;
-
-            default:
-                result = { error: -2, ...body }
-                break;
-        }
-        // send the result back as JSON data
-        return result
+        this.run();
     }
 
     run() {
 
-        this.api.set('port', PORT );
-        this.listener = HTTP.createServer( this.api );
-        this.listener.listen( PORT );
+        this.api.set('port', PORT);
+        this.listener = HTTP.createServer(this.api);
+        this.listener.listen(PORT);
         this.listener.on('listening', event => {
 
             let addr = this.listener.address();
             let bind = typeof addr == `string` ? `pipe ${addr}`: `port ${addr.port}`;
 
-            console.log(`Listneing on ${bind}`)
+            console.log(`Listening on ${bind}`)
         });
     }
 }

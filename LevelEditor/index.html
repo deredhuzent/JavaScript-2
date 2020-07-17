@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- Copyright (C) 2020 @deredhuzent, All Rights Reserved -->
+<html>
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Angry Pigs - level editor</title>
+
+        <meta name="description" content="Demo">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8">
+
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="shortcut icon" href="/images/kingPig.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Luckiest+Guy&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+        
+
+        <!-- This is the key CDN to pull jQuery from -->
+        <!-- To operate offline we may want these to load from a local source -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    </head>
+
+    <body>
+
+        <div id="appContainer">
+
+            <div id="leftContainer">
+
+                <div class="box" id="title">
+                    <img src="./images/title.PNG" alt="Level Editor: Angry Pigs">
+                </div>
+                <br>
+                <div>
+                    
+                    <div class="box">
+                        <!-- Level Info -->
+                        <table id="lvlTable">
+                            <form action="lvlInfo">
+    
+                                <tr>
+                                    <td>LEVEL:</td>
+                                    <td>
+                                        <input type="text" name="lvlName" id="lvlName" placeholder="Level 1"> 
+                                        <!-- <select name="lvlList" id="lvlName">
+                                            <option value="lvl-01">Level 1</option>
+                                            <option value="lvl-02">Level 2</option>
+                                        </select> -->
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>AUTHOR: </td>
+                                    <td><input type="text" name="userID" id="userID" placeholder="deredhuzent"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>AMMO:</td>
+                                    <td><input type="number" name="ammo" id="ammo" placeholder="3"></td>
+                                </tr>
+
+                                <tr>
+                                    <td>SHOTS:</td>
+                                    <td><input type="number" name="shots" id="shots" placeholder="3"></td>
+                                </tr>
+                                <tr>
+                                    <td>SCORE ONE STAR:</td>
+                                    <td><input type="number" name="scoreStar-1" id="scoreStar-1" placeholder="100"></td>
+                                </tr>
+                                <tr>
+                                    <td>SCORE TWO STARS:</td>
+                                    <td><input type="number" name="scoreStar-2" id="scoreStar-2" placeholder="10000"></td>
+                                </tr>
+                                <tr>
+                                    <td>SCORE THREE STARS:</td>
+                                    <td><input type="number" name="scoreStar-3" id="scoreStar-3" placeholder="50000"></td>
+                                </tr>
+                            </form>
+                        </table>
+                    </div>
+                        
+                    <div class="box" id="draggSpace">
+                        <div id="draggsTitle">
+                            <h4>DRAGGABLE OBJECTS:</h4>
+                        </div>
+                        
+                        <!-- Draggable Objects: Library - add/editor -->
+                        <div id="draggList">
+                            <ul id="objList">
+                                <!-- create items in code -->
+                                <li name="obj1" value="obj1">
+                                    <!-- attach default info -->
+                                    <div id="library-01" class="obstacle debug" draggable="true"></div>
+                                </li>
+                            </ul>
+
+                            <div id="coordsInfo" class="">
+                                <!-- Debug stuff on coords -->
+                            </div>
+
+                            <img class="draggObj obstacle" src="./images/crate-one.png" alt="">
+                        </div>
+
+                            
+                    </div>
+                    
+
+                </div>
+            </div>
+            
+            
+            <div id="rightContainer">
+                
+                <div id="navbar">
+                    <ul id="menuList">
+                        <!-- Menu: file:load/save -->
+                        <li><a id="addObjBtn" href="#"> ADD OBJECT</a></li>
+                        <li><a id="editObjBtn" href="#"> EDIT OBJECT</a></li>
+                        <li><a id="deleteObjBtn" href="#"> DELETE OBJECT</a></li>
+                        <li><a id="newLvlBtn" href="#">NEW LEVEL</a></li>
+                        <li><a id="loadLvlBtn" href="#">LOAD LEVEL</a></li>
+                        <li><a id="saveLvlBtn" href="#">SAVE</a></li>
+                        <li><a id="deleteLvlBtn" href="#">DELETE </a></li>
+                    </ul>
+                </div>
+
+                <div class="box" id="lvlEditor">
+                    <!-- Level Editor: 1280 x 720 -->
+                </div>
+                
+            </div> 
+        </div>
+
+            <script type="module" src="scripts/index.js"></script>
+
+        </body>
+
+        </html>
